@@ -1,5 +1,7 @@
 # PepFoundry
 
+PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. With PepFoundry, you can incorporate synthetic amino acids, generate cyclic peptides, and create peptide graphs. The package also produces RDKit molecule objects, which are highly useful for handling peptides in ML/AI Python applications.
+
 ## Installation Guide
 
 To create the environment with all required packages, simply download the file: **`setup_PepFoundry.sh`** and run the following script in your terminal:
