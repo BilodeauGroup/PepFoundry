@@ -7,8 +7,8 @@ except FileNotFoundError:
     long_description = "This library is to obtain the RDKit molecule from the amino acid sequence including the non-natural ones present in the library"
 
 setup(
-    name="smiles2peptides", 
-    version="0.1",  
+    name="pepfoundry", 
+    version="1.0",  
     packages=find_packages(),  
     install_requires=[  
         "pandas>=1.3.5",
@@ -16,14 +16,14 @@ setup(
     ],
     include_package_data=True, 
     package_data={
-        "smiles2peptides": ["project/core/amino_acid_library.xlsx"]
+        "pepfoundry": ["project/core/amino_acid_library.xlsx"]
     },
     author="Daniel Garzon Otero",
     author_email="vvd9fd@virginia.edu",
-    description="A module to obtain the RDKit molecule from an amino acid sequence",
+    description="A module to obtain the Peptide RDKit molecule from an amino acid sequence",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/danielgarzonotero/smiles2peptides.git",
+    url="https://github.com/BilodeauGroup/PepFoundry.git",
     python_requires='>=3.7.16',
 )
 

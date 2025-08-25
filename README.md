@@ -1,26 +1,26 @@
-# Smiles2Peptides
+# PepFoundry
 
 
 
 ## Installation Guide
 
-To create the environment with all required packages, simply download the file: **`setup_smiles2peptides.sh`** and run the following script in your terminal:
+To create the environment with all required packages, simply download the file: **`setup_PepFoundry.sh`** and run the following script in your terminal:
 
 ```sh
-bash setup_smiles2peptides.shp_env.sh 
+bash setup_PepFoundry.shp_env.sh 
 ```
 
 ### 1. Create a Conda Environment - Manually
 Alternatively, you can create the environment step by step by running the following commands manually in the terminal:
 
 ```sh
-conda create --name smiles2peptides python=3.7.16
+conda create --name pepfoundry python=3.7.16
 ```
 
 ### 2. Activate the Environment
 
 ```sh
-conda activate smiles2peptides
+conda activate pepfoundry
 ```
 
 ### 3. Install Dependencies
@@ -44,7 +44,7 @@ pip install ipykernel
 pip install pandas
 ```
 ```sh
-pip install git+https://github.com/BilodeauGroup/smiles2peptides.git
+pip install git+https://github.com/BilodeauGroup/PepFoundry.git
 ```
 
 ## Usage
@@ -52,21 +52,21 @@ pip install git+https://github.com/BilodeauGroup/smiles2peptides.git
 Once installed, you can import and use the package in your Python scripts:
 
 ```python
-from smiles2peptides.interface import Smiles2Peptide
+from pepfoundry.interface import PepFoundry
 ```
 
-## About the Smiles2Peptide class
-Smiles2Peptide is the central interface for building peptide molecules and analyzing amino acids using RDKit. It combines the functionalities of peptide construction and amino acid processing through internal modules.
+## About the PepFoundry class
+PepFoundry is the central interface for building peptide molecules and analyzing amino acids using RDKit. It combines the functionalities of peptide construction and amino acid processing through internal modules.
 
 ## Instantiating the class
 Before using it, you need to create an instance of the class:
 
 ```python
-smiles2peptide = Smiles2Peptide()
+pepfoundry = PepFoundry()
 ```
 Optionally, you can provide a custom amino acid dictionary by passing the path to an Excel file:
 ```python
-smiles2pep = Smiles2Peptide(custom_dict_path="path/to/custom_amino_acids.xlsx")
+pepfoundry = PepFoundry(custom_dict_path="path/to/custom_amino_acids.xlsx")
 ```
 
 ## About the amino acid dictionary
@@ -86,8 +86,6 @@ For a full usage example, please see the [examples.ipynb](examples.ipynb) notebo
 
 
 ## Peptide Notation
-
-
 
 - **Non-natural amino acids** are enclosed in `{Xyz}`.
 

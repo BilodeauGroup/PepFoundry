@@ -4,7 +4,7 @@ from IPython.display import display
 import torch
 import numpy as np
 
-from smiles2peptides.project.utils.peptide_utils import PeptideUtils
+from pepfoundry.project.utils.peptide_utils import PeptideUtils
 
 
 class AminoAcidUtils:

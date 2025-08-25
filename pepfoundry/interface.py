@@ -1,9 +1,9 @@
 #%%
-from smiles2peptides.project.core.peptide_builder import PeptideBuilder
-from smiles2peptides.project.core.amino_acid_builder import AminoAcidBuilder
-from smiles2peptides.project.core.library import AminoAcidDictionary
+from pepfoundry.project.core.peptide_builder import PeptideBuilder
+from pepfoundry.project.core.amino_acid_builder import AminoAcidBuilder
+from pepfoundry.project.core.library import AminoAcidDictionary
 
-class Smiles2Peptide:
+class PepFoundry():
     """
     Central interface for peptide construction and amino acid analysis using RDKit.
     Combines functionality from PeptideBuilder and AminoAcidBuilder.

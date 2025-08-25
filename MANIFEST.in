@@ -1,3 +1,3 @@
-recursive-include smiles2peptides/project/core *.xlsx
+recursive-include pepfoundry/project/core *.xlsx
 
 
