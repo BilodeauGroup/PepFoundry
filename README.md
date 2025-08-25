@@ -7,7 +7,7 @@ PepFoundry is a Python package designed to streamline peptide modeling beyond na
 To create the environment with all required packages, simply download the file: **`setup_pepfoundry.sh`** and run the following script in your terminal:
 
 ```sh
-bash setup_pepfoundry.shp_env.sh 
+bash setup_pepfoundry.sh 
 ```
 
 ### 1. Create a Conda Environment - Manually
