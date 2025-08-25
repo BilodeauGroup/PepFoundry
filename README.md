@@ -7,7 +7,7 @@
 To create the environment with all required packages, simply download the file: **`setup_PepFoundry.sh`** and run the following script in your terminal:
 
 ```sh
-bash setup_PepFoundry.shp_env.sh 
+bash setup_pepfoundry.shp_env.sh 
 ```
 
 ### 1. Create a Conda Environment - Manually
