@@ -1,7 +1,5 @@
 # PepFoundry
 
-
-
 ## Installation Guide
 
 To create the environment with all required packages, simply download the file: **`setup_PepFoundry.sh`** and run the following script in your terminal:

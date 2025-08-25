@@ -2,7 +2,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 set -o pipefail
 
-ENV_NAME="smiles2peptides"
+ENV_NAME="pepfoundry"
 PYTHON_VERSION="3.7.16"
 
 echo "[INFO] Creating conda environment '$ENV_NAME' with Python $PYTHON_VERSION..."
@@ -33,8 +33,8 @@ pip install ipykernel || { echo "[ERROR] ipykernel installation failed"; exit 1;
 echo "[INFO] Installing pandas..."
 pip install pandas || { echo "[ERROR] pandas installation failed"; exit 1; }
 
-echo "[INFO] Installing smiles2peptides package from GitHub..."
-pip install git+https://github.com/BilodeauGroup/smiles2peptides.git || { echo "[ERROR] smiles2peptides installation failed"; exit 1; }
+echo "[INFO] Installing pepfoundry package from GitHub..."
+pip install git+https://github.com/BilodeauGroup/PepFoundry.git || { echo "[ERROR] smiles2peptides installation failed"; exit 1; }
 
 echo "[INFO] Setup complete. The '$ENV_NAME' environment is ready to use."
 echo "[INFO] To activate the environment, run: conda activate $ENV_NAME"
