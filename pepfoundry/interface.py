@@ -24,10 +24,16 @@ class PepFoundry():
         
         # Build the amino acids molecules from the dictionary
         self.amino_acids_mol = self._build_amino_acids_mol()
-        # Precompute atomic features for the amino acid library
-        atomic_nodes_features, atomic_edge_features = self.peptide_builder.builder_atomic_features(self.amino_acids_mol)
+        
+        # Precompute atomic features 'without' chiralities
+        atomic_nodes_features, atomic_edge_features = self.peptide_builder.builder_atomic_features(self.amino_acids_mol, chiralities=False)
         self.library_atomic_nodes_features = atomic_nodes_features
         self.library_atomic_edge_features = atomic_edge_features
+        
+        # Precompute atomic features with chiralities
+        atomic_nodes_features_chirals, atomic_edge_features_chirals = self.peptide_builder.builder_atomic_features(self.amino_acids_mol, chiralities=True)
+        self.library_atomic_nodes_features_chirals = atomic_nodes_features_chirals
+        self.library_atomic_edge_features_chirals = atomic_edge_features_chirals
     
     def _init_amino_acid_dictionary(self, custom_dict_path):
         """ Initializes the amino acid dictionary from a specified path or defaults to a standard file.
@@ -56,57 +62,92 @@ class PepFoundry():
             amino_acids_mol.append(mol)
         return amino_acids_mol
     
-    def get_library_atomic_nodes_features(self):
+    def get_library_atomic_nodes_features(self, chiralities=False):
         """
-        Returns the atomic node features from the library.
-        This method retrieves the atomic node features that were computed from the amino acid molecules.
-        The features are stored in a dictionary where keys are feature identifiers and values are feature vectors.
+        Retrieve atomic node features from the library.
+        
+        This method returns the atomic node features computed from the amino acid molecules.
+        Features are stored in a dictionary, where each key is a feature identifier and the 
+        corresponding value is the feature vector.
+        
+        Args:
+            chiralities (bool, optional): If True, return features that include chirality information.
+                                        Default is False.
+        
         Returns:
-            dict: A dictionary containing atomic node features, where keys are feature identifiers and values are feature vectors.  
+            dict: Dictionary containing atomic node features. Keys are feature identifiers and
+                values are feature vectors.
         """
-        return self.library_atomic_nodes_features
+        if chiralities:
+            return self.library_atomic_nodes_features_chirals
+        else:
+            return self.library_atomic_nodes_features
     
     def get_library_atomic_edge_features(self):
-        """ 
-        Returns the atomic edge features from the library.
-        This method retrieves the atomic edge features that were computed from the amino acid molecules.
-        The features are stored in a dictionary where keys are feature identifiers and values are feature vectors.
-        Returns:
-            dict: A dictionary containing atomic edge features, where keys are feature identifiers and values are feature vectors.      
+        """
+        Prints the dimensions of the atomic node and edge feature vectors.
+        
+        Retrieves the atomic node and edge features from the library and prints
+        the length (number of elements) of a single feature vector for each type.
+        
+        Args:
+            chiralities (bool, optional): If True, use features that include chirality information.
+                                        Default is False.
         """
         return self.library_atomic_edge_features
     
-    def get_description_library_atomic_features(self):
+    def get_description_library_atomic_features(self,chiralities=False):
         """
-        Prints the length (dimension) of the atomic node and edge feature vectors.
+        Prints the dimensions of the atomic node and edge feature vectors.
+        
+        This method retrieves the library of atomic node and edge features and
+        reports the length of each feature vector. Optionally, chirality information
+        can be included if `chiralities=True`.
+        
+        Args:
+            chiralities (bool, optional): If True, include chirality in the feature
+                                        definitions. Default is False.
         """
-        node_features = self.get_library_atomic_nodes_features()
+        node_features = self.get_library_atomic_nodes_features(chiralities=chiralities)
         edge_features = self.get_library_atomic_edge_features()
+        
         node_dim = len(next(iter(node_features.values())))
         edge_dim = len(next(iter(edge_features.values())))
         print(f"Node feature vector length: {node_dim}")
         print(f"Edge feature vector length: {edge_dim}")
     
     
-    def get_peptide_tensor_atomic_features(self, mol, device ='cpu'):
+    def get_peptide_tensor_atomic_features(self, mol, chiralities= False, device ='cpu'):
         """
         Constructs atomic feature tensors for a given peptide molecule.
-        This method extracts atomic features from the molecule and converts them into PyTorch tensors.
-        It uses the peptide builder to obtain the atomic features and then converts them into tensors.
-        This is useful for preparing molecular data for machine learning models or graph neural networks.
+        
+        This method extracts atomic and bond features from the RDKit molecule `mol`
+        and converts them into PyTorch tensors suitable for machine learning models
+        or graph neural networks. Atomic and bond features can optionally include
+        chirality information.
         
         Args:
-            mol (rdkit.Chem.Mol): RDKit molecule object.
-            device (str, optional): Device to place the tensors on. Default is 'cpu'.
+            mol (rdkit.Chem.Mol): RDKit molecule object representing the peptide.
+            chiralities (bool, optional): If True, include chirality in the atomic
+                                        features. Default is False.
+            device (str, optional): Device to place the tensors on ('cpu' or 'cuda').
+                                    Default is 'cpu'.
         
         Returns:
             tuple: A tuple containing two tensors:
-                - atom_features_tensors: Tensor of shape [num_atoms, feature_dim] for atomic features.
-                - edge_features_tensors: Tensor of shape [num_edges, feature_dim] for bond features.
+                - atom_features_tensors (torch.Tensor): Shape [num_atoms, feature_dim], 
+                containing atomic features.
+                - edge_features_tensors (torch.Tensor): Shape [num_edges, feature_dim], 
+                containing bond features.
         """
-        node_ft_dict = self.library_atomic_nodes_features
-        edge_ft_dict= self.library_atomic_edge_features
-        node_keys_features, edge_key_features = self.peptide_builder.builder_peptide_atomic_features(mol)
+        node_keys_features, edge_key_features = self.peptide_builder.builder_peptide_atomic_features(mol,chiralities=chiralities)
+        
+        if chiralities:
+            node_ft_dict = self.library_atomic_nodes_features_chirals
+            edge_ft_dict= self.library_atomic_edge_features_chirals
+        else:
+            node_ft_dict = self.library_atomic_nodes_features
+            edge_ft_dict= self.library_atomic_edge_features
         
         atom_features_tensors, edge_features_tensors = self.peptide_builder.builder_atomic_features_tensors(
                                                                                                             node_keys_features,

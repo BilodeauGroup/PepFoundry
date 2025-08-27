@@ -69,12 +69,20 @@ class PeptideBuilder:
         return mol
     
     @staticmethod
-    def builder_atomic_features(amino_acids_mol):
-        return  PeptideUtils.util_atomic_features(amino_acids_mol)
+    def builder_atomic_features(amino_acids_mol, chiralities=False):
+        if chiralities:
+            return PeptideUtils.util_atomic_features_chirality(amino_acids_mol)
+        else:
+            return PeptideUtils.util_atomic_features(amino_acids_mol)
+
     
     @staticmethod
-    def builder_peptide_atomic_features(mol):
-        atoms_keys, edges_keys = PeptideUtils.util_extract_node_and_edge_keys(mol)
+    def builder_peptide_atomic_features(mol, chiralities=False):
+        if chiralities:
+            atoms_keys, edges_keys = PeptideUtils.util_extract_node_and_edge_keys_chirality(mol)
+        else:
+            atoms_keys, edges_keys = PeptideUtils.util_extract_node_and_edge_keys(mol)
+            
         return atoms_keys, edges_keys
     
     @staticmethod
@@ -86,6 +94,7 @@ class PeptideBuilder:
                                                                                                 edge_ft_dict,
                                                                                                 device
                                                                                                 )
+        
         return atom_features_tensors, edge_features_tensors
     
     @staticmethod

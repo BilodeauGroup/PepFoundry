@@ -269,6 +269,129 @@ class PeptideUtils:
         return node_features_dict, edge_features_dict
     
     @staticmethod
+    def util_atomic_features_chirality(amino_acids_mol):
+        # Extracts atomic and bond features from a list of RDKit molecules.
+        atom_features = {
+            "atomic_number": [],
+            "aromaticity": [],
+            "num_bonds": [],
+            "bonded_hydrogens": [],
+            "hybridization": [],
+            "implicit_valence": [],
+            "chirality": []
+        }
+        bond_features = {
+            "bond_type": [],
+            "in_ring": [],
+            "conjugated": [],
+            "bond_aromatic": [],
+            "valence_contribution_i": [],
+            "valence_contribution_f": [],
+        }
+        # Accumulate features from all amino acid molecules
+        for aa_mol in amino_acids_mol:
+            atom_features["atomic_number"].extend([atom.GetAtomicNum() for atom in aa_mol.GetAtoms()])
+            atom_features["aromaticity"].extend([int(atom.GetIsAromatic()) for atom in aa_mol.GetAtoms()])
+            atom_features["num_bonds"].extend([atom.GetDegree() for atom in aa_mol.GetAtoms()])
+            atom_features["bonded_hydrogens"].extend([atom.GetTotalNumHs() for atom in aa_mol.GetAtoms()])
+            atom_features["hybridization"].extend([str(atom.GetHybridization()) for atom in aa_mol.GetAtoms()])
+            atom_features["implicit_valence"].extend([atom.GetImplicitValence() for atom in aa_mol.GetAtoms()])
+            # Chirality feature: 
+            """
+            It reflects how chirality is encoded in the SMILES string.
+            Possible values:
+            CHI_UNSPECIFIED → no chirality specified.
+            CHI_TETRAHEDRAL_CW → tetrahedral center marked as clockwise.
+            CHI_TETRAHEDRAL_CCW → tetrahedral center marked as counterclockwise.
+            Important: this is not necessarily the real R/S configuration; it just stores what the SMILES said (@ vs @@).
+            """
+            atom_features["chirality"].extend([str(atom.GetChiralTag()) for atom in aa_mol.GetAtoms()])
+            
+            # Bond features
+            for bond in aa_mol.GetBonds():
+                bond_features["bond_type"].append(bond.GetBondTypeAsDouble())
+                bond_features["in_ring"].append(int(bond.IsInRing()))
+                bond_features["conjugated"].append(int(bond.GetIsConjugated()))
+                bond_features["bond_aromatic"].append(int(bond.GetIsAromatic()))
+                bond_features["valence_contribution_i"].append(int(bond.GetValenceContrib(bond.GetBeginAtom())))
+                bond_features["valence_contribution_f"].append(int(bond.GetValenceContrib(bond.GetEndAtom())))
+        
+        # Fit OneHotEncoders for each feature type
+        def fit_encoder(values):
+            encoder = OneHotEncoder()
+            encoder.fit(np.array(list(set(values))).reshape(-1, 1))
+            return encoder
+        
+        encoders = {
+            "atomic_number": fit_encoder(atom_features["atomic_number"]),
+            "aromaticity": fit_encoder(atom_features["aromaticity"]),
+            "num_bonds": fit_encoder(atom_features["num_bonds"]),
+            "bonded_hydrogens": fit_encoder(atom_features["bonded_hydrogens"]),
+            "hybridization": fit_encoder(atom_features["hybridization"]),
+            "implicit_valence": fit_encoder(atom_features["implicit_valence"]),
+            "chirality": fit_encoder(atom_features["chirality"]),
+            "bond_type": fit_encoder(bond_features["bond_type"]),
+            "in_ring": fit_encoder(bond_features["in_ring"]),
+            "conjugated": fit_encoder(bond_features["conjugated"]),
+            "bond_aromatic": fit_encoder(bond_features["bond_aromatic"]),
+            "valence_contribution_i": fit_encoder(bond_features["valence_contribution_i"]),
+            "valence_contribution_f": fit_encoder(bond_features["valence_contribution_f"]),
+        }
+        
+        # Create node features dictionary
+        node_features_dict = defaultdict(list)
+        for atom, aromatic, bonds, hydrogen, hybrid, impli_vale, chiral in zip(
+                atom_features["atomic_number"],
+                atom_features["aromaticity"],
+                atom_features["num_bonds"],
+                atom_features["bonded_hydrogens"],
+                atom_features["hybridization"],
+                atom_features["implicit_valence"],
+                atom_features["chirality"],
+            ):
+            
+            node_key = f"{atom}_{aromatic}_{bonds}_{hydrogen}_{hybrid}_{impli_vale}_{chiral}"
+            
+            feature_node = np.concatenate([
+                                        encoders["atomic_number"].transform([[atom]]).toarray()[0],
+                                        encoders["aromaticity"].transform([[aromatic]]).toarray()[0],
+                                        encoders["num_bonds"].transform([[bonds]]).toarray()[0],
+                                        encoders["bonded_hydrogens"].transform([[hydrogen]]).toarray()[0],
+                                        encoders["hybridization"].transform([[hybrid]]).toarray()[0],
+                                        encoders["implicit_valence"].transform([[impli_vale]]).toarray()[0],
+                                        encoders["chirality"].transform([[chiral]]).toarray()[0]
+                                    ])
+            
+            # Store the feature vector in the dictionary
+            node_features_dict[node_key] = feature_node
+        
+        # Create edge features dictionary
+        edge_features_dict = defaultdict(list)
+        for bond, ring, conjugat, aroma, valence_i, valence_f in zip(
+                                                                    bond_features["bond_type"],
+                                                                    bond_features["in_ring"],
+                                                                    bond_features["conjugated"],
+                                                                    bond_features["bond_aromatic"],
+                                                                    bond_features["valence_contribution_i"],
+                                                                    bond_features["valence_contribution_f"]
+                                                                ):
+            edge_key = f"{bond:.1f}_{ring:.1f}_{conjugat:.1f}_{aroma:.1f}_{valence_i:.1f}_{valence_f:.1f}"
+            
+            feature_edge = np.concatenate([
+                                            encoders["bond_type"].transform([[bond]]).toarray()[0],
+                                            encoders["in_ring"].transform([[ring]]).toarray()[0],
+                                            encoders["conjugated"].transform([[conjugat]]).toarray()[0],
+                                            encoders["bond_aromatic"].transform([[aroma]]).toarray()[0],
+                                            encoders["valence_contribution_i"].transform([[valence_i]]).toarray()[0],
+                                            encoders["valence_contribution_f"].transform([[valence_f]]).toarray()[0],
+                                        ])
+            
+            # Store the feature vector in the dictionary
+            edge_features_dict[edge_key] = feature_edge
+            
+        return node_features_dict, edge_features_dict
+    
+    @staticmethod
     def util_extract_node_and_edge_keys(mol):
         """
         Extracts node and edge key features from an RDKit molecule.
@@ -316,6 +439,58 @@ class PeptideUtils:
         return node_keys_features, edge_keys_features
     
     @staticmethod
+    def util_extract_node_and_edge_keys_chirality(mol):
+        """
+        Extracts node and edge key features from an RDKit molecule.
+        
+        Parameters:
+            mol (rdkit.Chem.Mol): An RDKit molecule object.
+        
+        Returns:
+            node_keys_features (list of str): Encoded string keys for atom-level features.
+            edge_key_features (list of str): Encoded string keys for bond-level features.
+        """
+        # Atom-level (node) features
+        atomic_number = [atom.GetAtomicNum() for atom in mol.GetAtoms()]
+        aromaticity = [int(atom.GetIsAromatic()) for atom in mol.GetAtoms()]
+        num_bonds = [atom.GetDegree() for atom in mol.GetAtoms()]
+        bonded_hydrogens = [atom.GetTotalNumHs() for atom in mol.GetAtoms()]
+        hybridization = [str(atom.GetHybridization()) for atom in mol.GetAtoms()]
+        implicit_valence = [atom.GetImplicitValence() for atom in mol.GetAtoms()]
+        chirality = [str(atom.GetChiralTag()) for atom in mol.GetAtoms()] 
+        
+        # Node key features with chirality
+        node_keys_features = [
+            f"{atomic}_{aromatic}_{bonds}_{hydrogen}_{hybrid}_{impli_vale}_{chiral}"
+            for atomic, aromatic, bonds, hydrogen, hybrid, impli_vale, chiral in zip(
+                atomic_number,
+                aromaticity,
+                num_bonds,
+                bonded_hydrogens,
+                hybridization,
+                implicit_valence,
+                chirality,
+            )
+        ]
+        
+        # Bond-level (edge) features
+        edge_keys_features = []
+        for bond in mol.GetBonds():
+            bond_type = bond.GetBondTypeAsDouble()
+            in_ring = int(bond.IsInRing())
+            conjugated = int(bond.GetIsConjugated())
+            bond_aromatic = int(bond.GetIsAromatic())
+            valence_contribution_i = int(bond.GetValenceContrib(bond.GetBeginAtom()))
+            valence_contribution_f = int(bond.GetValenceContrib(bond.GetEndAtom()))
+            
+            edge_key = f"{bond_type:.1f}_{in_ring:.1f}_{conjugated:.1f}_{bond_aromatic:.1f}_{valence_contribution_i:.1f}_{valence_contribution_f:.1f}"
+            edge_keys_features.append(edge_key)
+        
+        
+        return node_keys_features, edge_keys_features
+    
+    
+    @staticmethod
     def util_atomic_features_tensors(node_keys_features, edge_key_features, node_ft_dict, edge_ft_dict, device):
         """
         Builds PyTorch tensors for node and edge features using provided feature dictionaries and keys.
@@ -339,11 +514,14 @@ class PeptideUtils:
         if missing_node_keys:
             raise KeyError(
                 f"Missing node keys: {missing_node_keys}. "
-                "Node features not found in the library follow this format: "
+                "Node features not found in the library. "
+                "Format: "
                 "{atomic_number}_{aromatic_atom_flag}_{number_of_bonds}_{number_of_hydrogens}_{hybridization}_{implicit_valence}. "
+                "or with chiralities:"
+                "{atomic_number}_{aromatic_atom_flag}_{number_of_bonds}_{number_of_hydrogens}_{hybridization}_{implicit_valence}_{chirality}. "
                 "Please add examples for the missing keys."
             )
-        
+
         if missing_edge_keys:
             raise KeyError(
                 f"Missing edge keys: {missing_edge_keys}. "
@@ -351,6 +529,7 @@ class PeptideUtils:
                 "{bond_type}_{in_ring_flag}_{conjugated}_{aromatic_flag}_{valence_contribution_to_atom_i}_{valence_contribution_to_atom_f}. "
                 "Please add examples for the missing keys."
             )
+
         
         nodes_features = torch.tensor(
                                         np.array([node_ft_dict[key] for key in node_keys_features]),
