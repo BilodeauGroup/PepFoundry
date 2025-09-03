@@ -71,16 +71,23 @@ Optionally, you can provide a custom amino acid dictionary by passing the path t
 pepfoundry = PepFoundry(custom_dict_path="path/to/custom_amino_acids.xlsx")
 ```
 
-## About the amino acid dictionary
-The dictionary contains the amino acids definitions used for building peptides. It can be:
+## About the Amino Acid Dictionary
 
-Default: Loads the standard amino acid dictionary included with the package.
+The dictionary contains the definitions of amino acids used for building peptides. It can be provided in two ways:
 
-Custom: You can provide your own Excel file as a custom dictionary.
+- **Default:**  
+  Loads the standard amino acid dictionary included with the package:  
+[pepfoundry/project/core/amino_acids_library.xlsx](amino_acids_library)
 
-Important: The custom dictionary must follow the expected structure, with amino acids defined in the CHUCKLES format, including Map Numbers
+- **Custom:**  
+You can provide your own Excel file as a custom dictionary.  
 
-This structure ensures the peptide builder can interpret and construct molecules correctly.
+**Important:**  
+The custom dictionary must follow the expected structure, with amino acids defined in the **CHUCKLES format**, including **Map Numbers**.  
+
+Following this structure ensures that the peptide builder can correctly interpret the amino acids and construct molecules without errors.
+
+
 
 ## Example usage:
 
@@ -101,7 +108,7 @@ For a full usage example, please see the [examples_PepFoundry.ipynb](examples.ip
 
 - **Available amino acids:**  
   All supported amino acids can be found in:  
-
+[pepfoundry/project/core/amino_acids_library.xlsx](amino_acids_library)
 
 - **SMILES construction or rewriting (CHUCKLES format):**  
   Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
