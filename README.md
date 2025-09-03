@@ -77,8 +77,7 @@ The dictionary contains the definitions of amino acids used for building peptide
 
 - **Default:**  
   Loads the standard amino acid dictionary included with the package:  
-[pepfoundry/project/core/amino_acids_library.xlsx](amino_acids_library)
-
+[amino_acids_library](pepfoundry/project/core/amino_acids_library.xlsx)
 - **Custom:**  
 You can provide your own Excel file as a custom dictionary.  
 
@@ -108,7 +107,7 @@ For a full usage example, please see the [examples_PepFoundry.ipynb](examples.ip
 
 - **Available amino acids:**  
   All supported amino acids can be found in:  
-[pepfoundry/project/core/amino_acids_library.xlsx](amino_acids_library)
+[amino_acids_library](pepfoundry/project/core/amino_acids_library.xlsx)
 
 - **SMILES construction or rewriting (CHUCKLES format):**  
   Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
