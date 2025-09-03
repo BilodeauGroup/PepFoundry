@@ -84,16 +84,29 @@ This structure ensures the peptide builder can interpret and construct molecules
 
 ## Example usage:
 
-For a full usage example, please see the [examples.ipynb](examples.ipynb) notebook included in this repository.
+For a full usage example, please see the [examples_PepFoundry.ipynb](examples.ipynb) notebook included in this repository.
 
 
 ## Peptide Notation
 
-- **Non-natural amino acids** are enclosed in `{Xyz}`.
+- **Natural amino acids:**  
+  - L-amino acids are represented with **uppercase letters** (e.g., `A` for L-Alanine).  
+  - D-amino acids are represented with **lowercase letters** (e.g., `a` for D-Alanine).  
 
-- **Modifications** such as acetylation and amidation are also enclosed in `{}`, e.g., `{ac}` for acetylation and `{am}` for amidation.
+- **Non-natural amino acids** are enclosed in curly braces `{Xyz}`.
 
-For a full list of supported amino acids, refer to **`amino_acid_library.xlsx`**.
+- **Modifications** such as acetylation and amidation are also enclosed in `{}`, e.g.:  
+  - `{ac}` for acetylation  
+  - `{am}` for amidation  
+
+- **Available amino acids:**  
+  All supported amino acids can be found in:  
+
+
+- **SMILES construction or rewriting (CHUCKLES format):**  
+  Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
+[examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb)
+
 
 ## Author
 
