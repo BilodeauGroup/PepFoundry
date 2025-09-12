@@ -38,7 +38,7 @@ class PeptideBuilder:
                 concatenated_smile += next_smile
                 i = new_i  
             elif exception_value == 4:
-                if character == "{am}":
+                if character == "{am}" or len(characters) == 1:
                     smile = amino_acid_library[character][1]
                     concatenated_smile += smile
                 #TODO lógica pendiente para otros casos
