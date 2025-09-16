@@ -220,10 +220,12 @@ class AminoAcidUtils:
                 if config == 'L':
                     chirality.append([1, 0])  # L -> (1, 0)
                 elif config == 'D':
-                    chirality.append([0, 1])  # D -> (0, 1)
+                    chirality.append([0, 1])  # D -> (0, 1) #TODO SI NO HAY QUIRALIDAD? [0,0]?
+                else:
+                    chirality.append([0, 0])
             else:
                 print(f"Amino acid {aminoacid} not found in dictionary.")
-                chirality.append([0, 0])  # Default value if not found
+                
                 
         #TODO Anadir mas features?
         
