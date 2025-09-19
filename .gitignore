@@ -3,3 +3,5 @@
 *.pt
 *.pth
 *.pyc
+ML example/cache_fingerprints/*.npy
+ML example/cache_molecule_files/*.pkl
