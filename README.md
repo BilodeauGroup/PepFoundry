@@ -1,122 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PepFoundry</title>
+</head>
+<body>
+
 <h1 style="font-size: 150%;">PepFoundry</h1>
 
-
 <div style="text-align: justify;">
-PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It allows the incorporation of synthetic amino acids, the generation of cyclic peptides, and the creation of peptide graphs. The package also produces RDKit molecule objects, which are particularly useful for handling peptides in ML applications.
+    PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It allows the incorporation of synthetic amino acids, the generation of cyclic peptides, and the creation of peptide graphs. The package also produces RDKit molecule objects, which are particularly useful for handling peptides in ML applications.
 </div>
 
-![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/PepFoundry.gif)
+<img src="https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/PepFoundry.gif" alt="Demo">
 
-## Installation Guide
+<h2>Installation Guide</h2>
 
-To create the environment with all required packages, simply download the file: **`setup_pepfoundry.sh`** and run the following script in your terminal:
+<p>To create the environment with all required packages, simply download the file: <strong><code>setup_pepfoundry.sh</code></strong> and run the following script in your terminal:</p>
 
-```sh
-bash setup_pepfoundry.sh 
-```
+<pre><code>bash setup_pepfoundry.sh</code></pre>
 
-### 1. Create a Conda Environment - Manually
-Alternatively, you can create the environment step by step by running the following commands manually in the terminal:
+<h3>1. Create a Conda Environment - Manually</h3>
+<p>Alternatively, you can create the environment step by step by running the following commands manually in the terminal:</p>
 
-```sh
-conda create --name pepfoundry python=3.7.16
-```
+<pre><code>conda create --name pepfoundry python=3.7.16</code></pre>
 
-### 2. Activate the Environment
+<h3>2. Activate the Environment</h3>
 
-```sh
-conda activate pepfoundry
-```
+<pre><code>conda activate pepfoundry</code></pre>
 
-### 3. Install Dependencies
+<h3>3. Install Dependencies</h3>
 
-```sh
-pip install rdkit
-```
-```sh
+<pre><code>pip install rdkit
 pip3 install torch torchvision
-```
-```sh
 pip install openpyxl
-```
-```sh
 pip install scikit-learn
-```
-```sh
 pip install ipykernel
-```
-```sh
 pip install pandas
-```
-```sh
 pip install git+https://github.com/BilodeauGroup/PepFoundry.git
-```
+</code></pre>
 
-## Usage
+<h2>Usage</h2>
 
-Once installed, you can import and use the package in your Python scripts:
+<p>Once installed, you can import and use the package in your Python scripts:</p>
 
-```python
-from pepfoundry.interface import PepFoundry
-```
+<pre><code>from pepfoundry.interface import PepFoundry</code></pre>
 
-## About the PepFoundry class
-PepFoundry is the central interface for building peptide molecules and analyzing amino acids using RDKit. It combines the functionalities of peptide construction and amino acid processing through internal modules.
+<h2>About the PepFoundry class</h2>
 
-## Instantiating the class
-Before using it, you need to create an instance of the class:
+<p>PepFoundry is the central interface for building peptide molecules and analyzing amino acids using RDKit. It combines the functionalities of peptide construction and amino acid processing through internal modules.</p>
 
-```python
-pepfoundry = PepFoundry()
-```
-Optionally, you can provide a custom amino acid dictionary by passing the path to an Excel file:
-```python
-pepfoundry = PepFoundry(custom_dict_path="path/to/custom_amino_acids.xlsx")
-```
+<h2>Instantiating the class</h2>
 
-## About the Amino Acid Dictionary
+<p>Before using it, you need to create an instance of the class:</p>
 
-The dictionary contains the definitions of amino acids used for building peptides. It can be provided in two ways:
+<pre><code>pepfoundry = PepFoundry()</code></pre>
 
-- **Default:**  
-  Loads the standard amino acid dictionary included with the package:  
-[amino_acids_library](pepfoundry/project/core/amino_acids_library.xlsx)
-- **Custom:**  
-You can provide your own Excel file as a custom dictionary.  
+<p>Optionally, you can provide a custom amino acid dictionary by passing the path to an Excel file:</p>
 
-**Important:**  
-The custom dictionary must follow the expected structure, with amino acids defined in the **CHUCKLES format**, including **Map Numbers**.  
+<pre><code>pepfoundry = PepFoundry(custom_dict_path="path/to/custom_amino_acids.xlsx")</code></pre>
 
-Following this structure ensures that the peptide builder can correctly interpret the amino acids and construct molecules without errors.
+<h2>About the Amino Acid Dictionary</h2>
 
+<p>The dictionary contains the definitions of amino acids used for building peptides. It can be provided in two ways:</p>
 
+<ul>
+    <li><strong>Default:</strong> Loads the standard amino acid dictionary included with the package: <a href="pepfoundry/project/core/amino_acids_library.xlsx">amino_acids_library</a></li>
+    <li><strong>Custom:</strong> You can provide your own Excel file as a custom dictionary.</li>
+</ul>
 
-## Example usage:
+<p><strong>Important:</strong> The custom dictionary must follow the expected structure, with amino acids defined in the <strong>CHUCKLES format</strong>, including <strong>Map Numbers</strong>.</p>
 
-For a full usage example, please see the [examples_PepFoundry.ipynb](examples.ipynb) notebook included in this repository.
+<p>Following this structure ensures that the peptide builder can correctly interpret the amino acids and construct molecules without errors.</p>
 
+<h2>Example usage</h2>
 
-## Peptide Notation
+<p>For a full usage example, please see the <a href="examples.ipynb">examples_PepFoundry.ipynb</a> notebook included in this repository.</p>
 
-- **Natural amino acids:**  
-  - L-amino acids are represented with **uppercase letters** (e.g., `A` for L-Alanine).  
-  - D-amino acids are represented with **lowercase letters** (e.g., `a` for D-Alanine).  
+<h2>Peptide Notation</h2>
 
-- **Non-natural amino acids** are enclosed in curly braces `{Xyz}`.
+<ul>
+    <li><strong>Natural amino acids:</strong>
+        <ul>
+            <li>L-amino acids are represented with <strong>uppercase letters</strong> (e.g., <code>A</code> for L-Alanine).</li>
+            <li>D-amino acids are represented with <strong>lowercase letters</strong> (e.g., <code>a</code> for D-Alanine).</li>
+        </ul>
+    </li>
+    <li><strong>Non-natural amino acids</strong> are enclosed in curly braces <code>{Xyz}</code>.</li>
+    <li><strong>Modifications</strong> such as acetylation and amidation are also enclosed in <code>{}</code>, e.g.:
+        <ul>
+            <li><code>{ac}</code> for acetylation</li>
+            <li><code>{am}</code> for amidation</li>
+        </ul>
+    </li>
+    <li><strong>Available amino acids:</strong> All supported amino acids can be found in: <a href="pepfoundry/project/core/amino_acids_library.xlsx">amino_acids_library</a></li>
+    <li><strong>SMILES construction or rewriting (CHUCKLES format):</strong> Examples of how to construct or rewrite SMILES for amino acids in <strong>CHUCKLES format</strong> are provided in: <a href="examples_CHUCKLES.ipynb">examples_CHUCKLES.ipynb</a></li>
+</ul>
 
-- **Modifications** such as acetylation and amidation are also enclosed in `{}`, e.g.:  
-  - `{ac}` for acetylation  
-  - `{am}` for amidation  
+<h2>Author</h2>
 
-- **Available amino acids:**  
-  All supported amino acids can be found in:  
-[amino_acids_library](pepfoundry/project/core/amino_acids_library.xlsx)
+<p><a href="https://github.com/danielgarzonotero">Daniel Garzón Otero</a></p>
 
-- **SMILES construction or rewriting (CHUCKLES format):**  
-  Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
-[examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb)
-
-
-## Author
-
-[Daniel Garzón Otero](https://github.com/danielgarzonotero)
+</body>
+</html>
