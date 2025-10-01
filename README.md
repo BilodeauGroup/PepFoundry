@@ -110,7 +110,7 @@ Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES for
 
 ### 3.3. ML Implementation 
 Examples of how PepFoudry can be implemented for ML application is provided in:  
-[ML example](ML example/example_ML.ipynb)
+[ML example](Example_ML)
 
 ## 4. How to cite this work:
 
