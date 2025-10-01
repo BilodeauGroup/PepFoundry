@@ -1,5 +1,13 @@
 # PepFoundry
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
+![Python](https://img.shields.io/badge/Python-3.7.16-blue.svg)  
+![RDKit](https://img.shields.io/badge/rdkit-2023.3.2-orange.svg)
+![PyTorch](https://img.shields.io/badge/torch-1.13.1-red.svg)
+![Torchvision](https://img.shields.io/badge/torchvision-0.14.1-lightgrey.svg)
+![openpyxl](https://img.shields.io/badge/openpyxl-3.1.3-yellow.svg)
+![scikit--learn](https://img.shields.io/badge/scikit--learn-1.0.2-green.svg)
+![pandas](https://img.shields.io/badge/pandas-1.3.5-blueviolet.svg)
+
 
 
 PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It enables the incorporation of synthetic (non-canonical) amino acids and produces both RDKit molecule objects and peptide graphs, facilitating their use in machine learning applications.
@@ -12,8 +20,6 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 
 ## 1. Installation Guide
-![Python](https://img.shields.io/badge/Python-3.7.16-blue.svg)
-
 
 ### 1.1. Creating an Anaconda Environment with PepFoundry
 
@@ -123,6 +129,6 @@ Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES for
 Examples of how PepFoudry can be implemented for ML application is provided in:  
 - [ML example](Example_ML)
 
-## 4. How to cite this work:
+## 4. Cite
 
 
