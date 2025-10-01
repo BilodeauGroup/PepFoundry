@@ -1,6 +1,9 @@
-<h1 style="font-size: 90%;">PepFoundry</h1>
+<h1 style="font-size: 150%;">PepFoundry</h1>
 
+
+<div style="text-align: justify;">
 PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It allows the incorporation of synthetic amino acids, the generation of cyclic peptides, and the creation of peptide graphs. The package also produces RDKit molecule objects, which are particularly useful for handling peptides in ML applications.
+</div>
 
 ![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/PepFoundry.gif)
 
