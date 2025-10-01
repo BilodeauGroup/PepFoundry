@@ -1,7 +1,7 @@
 # PepFoundry
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
 ![Python](https://img.shields.io/badge/Python-3.7.16-blue.svg)  
-![RDKit](https://img.shields.io/badge/rdkit-2023.3.2-orange.svg)
+![RDKit](https://img.shields.io/badge/rdkit-2023.3.2-purple.svg)
 ![PyTorch](https://img.shields.io/badge/torch-1.13.1-red.svg)
 ![Torchvision](https://img.shields.io/badge/torchvision-0.14.1-lightgrey.svg)
 ![openpyxl](https://img.shields.io/badge/openpyxl-3.1.3-yellow.svg)
