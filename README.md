@@ -112,7 +112,7 @@ For a full usage examples, please see the [examples_PepFoundry](examples.ipynb) 
 
 ### 3.3. ML Implementation 
   Examples of PepFoudry can be implemented for ML application is provided in:  
-[ML example](ML example)
+[ML example](ML example/example_ML.ipynb)
 
 ## Author
 
