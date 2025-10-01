@@ -102,15 +102,16 @@ The Excel file should adhere to the format and conventions defined in the defaul
 
 ### 3.1. PepFoundry Implementation
 Full usage examples are provided in:
-[examples_PepFoundry](examples.ipynb) 
+- [examples_PepFoundry](examples.ipynb) 
+
 ### 3.2. CHUCKLES Construction
 **SMILES construction or rewriting (CHUCKLES format):**  
 Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
-[examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb)
+- [examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb)
 
 ### 3.3. ML Implementation 
 Examples of how PepFoudry can be implemented for ML application is provided in:  
-[ML example](Example_ML)
+- [ML example](Example_ML)
 
 ## 4. How to cite this work:
 
