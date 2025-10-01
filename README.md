@@ -1,8 +1,13 @@
 # PepFoundry
 
-PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It allows the incorporation of synthetic amino acids, the generation of cyclic peptides, and the creation of peptide graphs. The package also produces RDKit molecule objects, which are particularly useful for handling peptides in ML applications.
+PepFoundry is a Python package designed to streamline peptide modeling beyond natural amino acids and linear topologies. It enables the incorporation of synthetic (non-canonical) amino acids and produces both RDKit molecule objects and peptide graphs, facilitating their use in machine learning applications.
 
 ![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/PepFoundry.gif)
+
+In addition, PepFoundry supports the generation of cyclic peptides. These peptides are also represented as RDKit molecule objects and graphs, making them suitable for advanced computational analysis and ML workflows.
+
+![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/cycle.gif)
+
 
 ## 1. Installation Guide
 
@@ -86,6 +91,7 @@ pepfoundry = PepFoundry(custom_dict_path="path/to/custom_amino_acids.xlsx")
 The Excel file should adhere to the format and conventions defined in the default database, with amino acids defined in the CHUCKLES format, including Map Numbers. Following this structure ensures that the peptide builder can correctly interpret the amino acids and construct molecules without errors.
 
 ### 2.2. Amino Acid Convention
+![Database Convention](fig/database_convention.jpeg)
 
 - **Canonical Amino Acids:**  
   - **L-amino acids** are represented with **uppercase letters** (e.g., `A` for **L**-Alanine).  
