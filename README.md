@@ -108,12 +108,12 @@ For a full usage examples, please see the [examples_PepFoundry](examples.ipynb) 
 ### 3.2. CHUCKLES Construction
 **SMILES construction or rewriting (CHUCKLES format):**  
   Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES format** are provided in:  
-[examples_CHUCKLES.ipynb](ML example/example_ML.ipynb)
+[examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb)
 
 ### 3.3. ML Implementation 
   Examples of PepFoudry can be implemented for ML application is provided in:  
 [ML example](ML example/example_ML.ipynb)
 
-## Author
+## 4. How to cite this work:
 
-[Daniel Garzón Otero](https://github.com/danielgarzonotero)
+
