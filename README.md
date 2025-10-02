@@ -1,4 +1,6 @@
-# PepFoundry
+![PepFoundry](fig/logo_pepfoundry.jpeg)
+______________________________________________________________________
+
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
 ![Python](https://img.shields.io/badge/Python-3.7.16-blue.svg)  
 ![RDKit](https://img.shields.io/badge/rdkit-2023.3.2-purple.svg)
