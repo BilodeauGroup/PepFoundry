@@ -210,9 +210,17 @@ class AminoAcidUtils:
             TypeError: If the sequence is not a string.
         """
         sequence = sequence.replace('\u200b', '').replace(' ', '')
+        
         characters = PeptideUtils.util_extract_characters(sequence)
         
         chirality = []
+        
+        # Filter characters to include only valid amino acids and peptoid units and not modifications
+        valid_types = {'Amino Acid', 'Peptoid Unit'}
+        characters = [
+                        c for c in characters
+                        if c in amino_acid_library and amino_acid_library[c][3] in valid_types
+                    ]
         
         for aminoacid in characters:
             if aminoacid in amino_acid_library:
