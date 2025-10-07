@@ -61,7 +61,7 @@ class AminoAcidDictionary:
                 if notation in seen_notations:
                     raise ValueError(
                                         f"The notation '{notation}' is already used by another amino acid. "
-                                        "Please rename or remove duplicates; each notation must be unique."
+                                        "Please rename or remove duplicates; each notation or token must be unique."
                                     )
                 
                 seen_notations.add(notation)
