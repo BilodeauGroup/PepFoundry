@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="fig/logo_pepfoundry.svg" alt="PepFoundry" width="200"/>
+  <img src="fig/logo_pepfoundry.svg" alt="PepFoundry" width="800"/>
 </p>
 
 ______________________________________________________________________
