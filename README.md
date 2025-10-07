@@ -1,4 +1,7 @@
-![PepFoundry](fig/logo_pepfoundry.svg)
+<p align="center">
+  <img src="fig/logo_pepfoundry.svg" alt="PepFoundry" width="200"/>
+</p>
+
 ______________________________________________________________________
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
