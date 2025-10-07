@@ -1,4 +1,4 @@
-![PepFoundry](fig/logo_pepfoundry.jpeg)
+![PepFoundry](fig/logo_pepfoundry.svg)
 ______________________________________________________________________
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
