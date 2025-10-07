@@ -48,6 +48,8 @@ class AminoAcidDictionary:
             raise ValueError(f"Excel file must contain columns: {required_columns}")
         
         dictionary = {}
+        seen_notations = set()
+        
         for _, row in df.iterrows():
             notation = str(row['Notation']).strip()
             chirality = str(row['Chirality']).strip() if pd.notnull(row['Chirality']) else ""
@@ -56,6 +58,13 @@ class AminoAcidDictionary:
             type_ = str(row['Type']).strip() if pd.notnull(row['Type']) else ""
             
             if notation:
+                if notation in seen_notations:
+                    raise ValueError(
+                                        f"The notation '{notation}' is already used by another amino acid. "
+                                        "Please rename or remove duplicates; each notation must be unique."
+                                    )
+                
+                seen_notations.add(notation)
                 dictionary[notation] = (chirality, smiles, exception, type_)
         
         return dictionary
@@ -116,14 +125,16 @@ class AminoAcidDictionary:
     
     def get_all_amino_acids_notations(self):
         """
-        Returns a list of all amino acid notations in the dictionary where Type is 'Amino Acid'.
+        Returns a list of all amino acid notations in the dictionary where Type is
+        either 'Amino Acid' or 'Peptoid Unit'.
+        
         Returns:
             list: List of notation strings.
         """
         return [
-                k for k, v in self._dictionary.items()
-                if len(v) > 3 and v[3] == "Amino Acid"
-                ]
+            k for k, v in self._dictionary.items()
+            if len(v) > 3 and v[3] in {"Amino Acid", "Peptoid Unit"}
+        ]
 
 
         

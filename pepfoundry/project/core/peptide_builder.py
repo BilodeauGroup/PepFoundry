@@ -26,7 +26,7 @@ class PeptideBuilder:
             if character not in amino_acid_library:
                 raise ValueError(f"The amino acid '{character}' is not found in the dictionary.")
             
-            exception_value = amino_acid_library[character][2]  # asume que ya es int o None
+            exception_value = amino_acid_library[character][2]  # asume int o None
             
             if exception_value is not '':
                 exception_value = int(float(exception_value))
