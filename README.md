@@ -1,7 +1,6 @@
 <p align="center">
   <img src="fig/logo_pepfoundry.svg" alt="PepFoundry" width="1000"/>
 </p>
-
 ______________________________________________________________________
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
