@@ -26,16 +26,16 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 ## 1. Installation Guide
 
-### 1.1. Creating an Anaconda Environment with PepFoundry
+### 1.1. Creating an Environment with PepFoundry
 
-To create the environment with all required packages, simply download the file: **`setup_pepfoundry.sh`** and run the following script in your terminal:
+To automatically create the environment with all required packages, download the file **`setup_pepfoundry.sh`** and run the following command:
 
 ```sh
 bash setup_pepfoundry.sh 
 ```
 
 ### 1.2. Creating an Anaconda Environment Manually
-Alternatively, you can create the environment manually by running the following commands manually in the terminal:
+Alternatively, you can create an Anaconda environment manually by running the following commands manually in the terminal:
 
 #### 1.2.1. Creating the Environment
 
