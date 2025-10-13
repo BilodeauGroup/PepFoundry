@@ -32,6 +32,8 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/BilodeauGroup/PepFoundry",
     python_requires='>=3.7.16',
+    license="AGPL-3.0",  
+    license_files=["LICENSE"],
 )
 
 
