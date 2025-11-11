@@ -122,7 +122,7 @@ The Excel file should adhere to the format and conventions defined in the defaul
 
 ### 3.1. PepFoundry Implementation
 Full usage examples are provided in:
-- [examples_PepFoundry](examples.ipynb) 
+- [examples_PepFoundry](examples_PepFoundry.ipynb) 
 
 ### 3.2. CHUCKLES Construction
 **SMILES construction or rewriting (CHUCKLES format):**  
@@ -131,7 +131,7 @@ Examples of how to construct or rewrite SMILES for amino acids in **CHUCKLES for
 
 ### 3.3. ML Implementation 
 Examples of how PepFoudry can be implemented for ML application is provided in:  
-- [ML example](Example_ML)
+- [ML example](example_ML/example_ML.ipynb)
 
 ## 4. Cite
 Garzon Otero D, Akbari O, Mandapati A, Bilodeau C. PepFoundry: A Pipeline for Building Machine-Learning Ready Representations of Non-Standard Peptides Containing Cycles, Non-natural Residues, Polymer Units, and More. ChemRxiv. 2025; doi:10.26434/chemrxiv-2025-6tr6g This content is a preprint and has not been peer-reviewed.
