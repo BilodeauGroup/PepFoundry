@@ -24,7 +24,7 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 ## New Updates
 
-- Nov,26,2025, Version 1.1.0: We have added a new method `get_smile_chuckles_format` that automatically converts peptide SMILES into CHUCKLES format, including mapping numbers for the terminal residues. This update introduces a new dependency, `openbabel`. Usage and examples of this method can be found in [examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb).
+- Nov.26/2025, **Version 1.1.0**: We have added a new method `get_smile_chuckles_format` that automatically converts peptide SMILES into CHUCKLES format, including mapping numbers for the terminal residues. This update introduces a new dependency, `openbabel`. Usage and examples of this method can be found in [examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb).
 
 
 ## 1. Installation Guide
