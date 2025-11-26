@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setup(
     name="pepfoundry",
-    version="1.0.0",
+    version="1.0.1",
     packages=find_packages(),
     install_requires=[
         "pandas>=1.3.5",

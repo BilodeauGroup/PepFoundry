@@ -100,4 +100,7 @@ class PeptideBuilder:
     @staticmethod
     def builder_atomic_adjacency_matrix(mol, device):
         return PeptideUtils.util_atomic_adjacency_matrix(mol, device)
+    
+    def builder_chuckles_from_smiles(peptide_smiles, plot):
+        return PeptideUtils.util_smile_chuckles_format(peptide_smiles, plot)
 

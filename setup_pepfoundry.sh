@@ -19,7 +19,7 @@ echo "[INFO] Installing RDKit..."
 pip install rdkit || { echo "[ERROR] RDKit installation failed"; exit 1; }
 
 echo "[INFO] Installing PyTorch..."
-pip install torch torchvision || { echo "[ERROR] PyTorch installation failed"; exit 1; }
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch installation failed"; exit 1; }
 
 echo "[INFO] Installing Openpyxl..."
 pip install openpyxl || { echo "[ERROR] Openpyxl installation failed"; exit 1; }
@@ -32,6 +32,12 @@ pip install ipykernel || { echo "[ERROR] ipykernel installation failed"; exit 1;
 
 echo "[INFO] Installing pandas..."
 pip install pandas || { echo "[ERROR] pandas installation failed"; exit 1; }
+
+echo "[INFO] Installing Open Babel (conda-forge)..."
+conda install -c conda-forge --yes openbabel || { echo "[ERROR] Open Babel installation failed"; exit 1; }
+
+echo "[INFO] Installing Pybel (python wrapper for Open Babel)..."
+pip install openbabel-wheel || { pip install pybel || echo "[WARNING] Pybel fallback installed"; }
 
 echo "[INFO] Installing pepfoundry package from GitHub..."
 pip install git+https://github.com/BilodeauGroup/PepFoundry.git || { echo "[ERROR] smiles2peptides installation failed"; exit 1; }

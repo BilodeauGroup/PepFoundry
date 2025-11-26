@@ -4,6 +4,7 @@ from rdkit import Chem
 from rdkit.Chem import Draw  
 from IPython.display import display 
 import re
+from openbabel import openbabel, pybel
 
 import numpy as np
 import torch
@@ -561,3 +562,104 @@ class PeptideUtils:
         graph_edges = [[x[0] for x in edges],[x[1] for x in edges]]
         
         return torch.tensor(graph_edges, dtype=torch.long, device=device)
+    
+    @staticmethod
+    def util_plot_smiles_pair(original_smiles, converted_smiles):
+        """
+        Plot two molecules side by side using RDKit.
+        """
+        mol1 = Chem.MolFromSmiles(original_smiles)
+        mol2 = Chem.MolFromSmiles(converted_smiles)
+
+        if mol1 is None or mol2 is None:
+            print("[WARNING] RDKit failed to parse one of the SMILES.")
+            return
+
+        img = Draw.MolsToImage([mol1, mol2], legends=["Canonical", "CHUCKLES"], subImgSize=(300, 300))
+        display(img)
+    
+    @staticmethod
+    def util_smile_chuckles_format(peptide_smiles, plot):
+        """
+        This code was adapted from the work:
+
+        CycloPs: Generating Virtual Libraries of Cyclized and Constrained Peptides 
+        Including Nonnatural Amino Acids
+        Fergal J. Duffy, Mélanie Verniere, Marc Devocelle, Elise Bernard, 
+        Denis C. Shields, and Anthony J. Chubb
+        Journal of Chemical Information and Modeling 2011 51 (4), 829-836
+        DOI: 10.1021/ci100431r
+        
+        The original implementation can be found at:
+        https://github.com/fergaljd/cyclops/blob/master/CycloPs/aa_converter.py
+        
+        Important notes about this adaptation:
+        - Converted from Python 2 to Python 3 syntax
+        - Integrated RDKit to canonicalize the input SMILES before any processing with OpenBabel.
+        - Added atom mapping for terminal residues:
+            N-terminal nitrogen is mapped as [NHX:1], where X is determined by implicit hydrogen count.
+            C-terminal carbon is mapped as [C:2].
+        - Optional plotting of canonical vs. CHUCKLES SMILES using RDKit for verification.
+        - Uses OpenBabel/pybel for detecting N- and C-terminal patterns in amino-acid SMILES.
+        - Maintains the original purpose: to reorder SMILES from N-terminus to C-terminus using CHUCKLES formatting.
+        
+        CHUCKLES reference:
+        CHUCKLES: A method for representing and searching peptide and peptoid sequences on both monomer and atomic levels
+        Michael A. Siani, David Weininger, and Jeffrey M. Blaney
+        Journal of Chemical Information and Computer Sciences 1994 34 (3), 588-593
+        DOI: 10.1021/ci00019a017
+        """
+        # --- Canonicalize the input SMILES using RDKit ---
+        mol_rd = Chem.MolFromSmiles(peptide_smiles)
+        if mol_rd is None:
+            raise ValueError("RDKit failed to parse the SMILES: " + peptide_smiles)
+        canonical_smiles = Chem.MolToSmiles(mol_rd, canonical=True)
+        
+        # --- Load the canonical SMILES into OpenBabel ---
+        conv = openbabel.OBConversion()
+        conv.SetInAndOutFormats("smi", "smi")
+        mol = openbabel.OBMol()
+        conv.ReadString(mol, canonical_smiles)
+        pbmol = pybel.Molecule(mol)
+        
+        # --- Define SMARTS patterns for N-terminal and C-terminal ---
+        n_term_pat = pybel.Smarts('[$(NCC(O)=O)]')
+        c_term_pat = pybel.Smarts('[$(OC(=O)CN)]')
+        
+        # --- Find matches for N-term and C-term ---
+        n_term_matches = n_term_pat.findall(pbmol)
+        c_term_matches = c_term_pat.findall(pbmol)
+        
+        if not n_term_matches or not c_term_matches:
+            raise ValueError("Could not find N-term or C-term in SMILES: " + peptide_smiles)
+        
+        # --- Get the indices of N-term and C-term atoms ---
+        n_idx = n_term_matches[0][0]
+        c_idx = c_term_matches[0][0]
+        
+        # --- Count implicit hydrogens on N-terminal atom ---
+        atomN = mol.GetAtom(n_idx)
+        H_terminusN = atomN.GetImplicitHCount()
+        #print('Number of hydrogens on N-terminal:', H_terminusN)
+        
+        # --- Reorder SMILES so that it starts at N-term and ends at C-term ---
+        conv.AddOption("f", openbabel.OBConversion.OUTOPTIONS, str(n_idx))
+        conv.AddOption("l", openbabel.OBConversion.OUTOPTIONS, str(c_idx))
+        smiles = conv.WriteString(mol).strip()
+        
+        # --- Replace terminal atoms with mapped versions ---
+        if H_terminusN != 0:
+            # If N-terminal has implicit hydrogens, include them in the mapping
+            smiles_mod = smiles.replace("N", f"[NH{H_terminusN}:1]", 1)
+        else:
+            smiles_mod = smiles.replace("N", f"[N:1]", 1)
+        
+        # Replace the last carbon with C-terminal mapping
+        last_idx = smiles_mod.rfind("C")
+        smiles_mod = smiles_mod[:last_idx] + "[C:2]" + smiles_mod[last_idx + 1:]
+        
+        # --- Optionally plot the original vs modified SMILES ---
+        if plot:
+            PeptideUtils.util_plot_smiles_pair(peptide_smiles, smiles_mod)
+        
+        return smiles_mod

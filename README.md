@@ -22,6 +22,10 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 ![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/cycle.gif)
 
+## New Updates
+---------------
+- Nov,26,2025, Version 1.1.0: We have added a new method `get_smile_chuckles_format` that automatically converts peptide SMILES into CHUCKLES format, including mapping numbers for the terminal residues. This update introduces a new dependency, `openbabel`. Usage and examples of this method can be found in [examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb).
+
 
 ## 1. Installation Guide
 
@@ -54,7 +58,7 @@ conda activate pepfoundry
 pip install rdkit
 ```
 ```sh
-pip3 install torch torchvision
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html 
 ```
 ```sh
 pip install openpyxl
@@ -67,6 +71,12 @@ pip install ipykernel
 ```
 ```sh
 pip install pandas
+```
+```sh
+conda install -c conda-forge --yes openbabel 
+```
+```sh
+pip install openbabel-wheel
 ```
 #### 1.2.4.  Installing PepFoundry from GitHub
 ```sh

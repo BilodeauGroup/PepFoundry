@@ -1,6 +1,6 @@
-from rdkit import Chem  
-from rdkit.Chem import Draw  
-from IPython.display import display 
+from rdkit import Chem
+from rdkit.Chem import Draw
+from IPython.display import display
 import torch
 import numpy as np
 
@@ -228,13 +228,12 @@ class AminoAcidUtils:
                 if config == 'L':
                     chirality.append([1, 0])  # L -> (1, 0)
                 elif config == 'D':
-                    chirality.append([0, 1])  # D -> (0, 1) #TODO SI NO HAY QUIRALIDAD? [0,0]?
+                    chirality.append([0, 1])  # D -> (0, 1)
                 else:
                     chirality.append([0, 0])
             else:
                 print(f"Amino acid {aminoacid} not found in dictionary.")
-                
-                
-        #TODO Anadir mas features?
+
+        #TODO more features
         
         return torch.tensor(np.array(chirality, dtype=np.float32), device=device)

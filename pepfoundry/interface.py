@@ -255,5 +255,14 @@ class PepFoundry():
         """
         return self.amino_acid_builder.builder_amino_acid_features(sequence, self.dictionary, device)
     
-    
+    def get_smile_chuckles_format(self, peptide_smiles, plot=False):
+        """
+        Rearranges amino-acid SMILES into a CHUCKLES
+        and optionally plot the Canonical vs. CHUCKLES SMILES.
+        Args:
+            aa_smiles (str): Amino acid SMILES string.
+            plot (bool, optional): Whether to plot the Canonical vs. CHUCKLES SMILES. Default is False.
+        """
+        
+        return  self.peptide_builder.builder_chuckles_from_smiles(peptide_smiles, plot)
 
