@@ -579,7 +579,7 @@ class PeptideUtils:
         display(img)
     
     @staticmethod
-    def util_smile_chuckles_format(peptide_smiles, plot):
+    def util_smiles_chuckles_format(peptide_smiles, plot):
         """
         This code was adapted from the work:
 
