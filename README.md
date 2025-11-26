@@ -57,8 +57,13 @@ conda activate pepfoundry
 ```sh
 pip install rdkit
 ```
+- If you have a CUDA-compatible GPU:
 ```sh
 pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html 
+```
+- Else:
+```sh
+pip install torch==1.13.1 torchvision==0.14.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 ```sh
 pip install openpyxl

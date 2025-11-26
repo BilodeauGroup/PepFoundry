@@ -18,8 +18,14 @@ echo "[INFO] Environment activated."
 echo "[INFO] Installing RDKit..."
 pip install rdkit || { echo "[ERROR] RDKit installation failed"; exit 1; }
 
-echo "[INFO] Installing PyTorch..."
-pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch installation failed"; exit 1; }
+# Check for CUDA availability
+if command -v nvidia-smi &> /dev/null; then
+    echo "[INFO] CUDA detected, installing GPU version of PyTorch..."
+    pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch GPU installation failed"; exit 1; }
+else
+    echo "[INFO] CUDA not detected, installing CPU version of PyTorch..."
+    pip install torch==1.13.1 torchvision==0.14.1 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch CPU installation failed"; exit 1; }
+fi
 
 echo "[INFO] Installing Openpyxl..."
 pip install openpyxl || { echo "[ERROR] Openpyxl installation failed"; exit 1; }
