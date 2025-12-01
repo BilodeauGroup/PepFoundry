@@ -11,6 +11,7 @@ class AminoAcidBuilder:
                                     mol,
                                     highlight_bonds,
                                     obtain_amino_acids,
+                                    plot
                                     ): 
         """
         Handles peptide bond processing in a molecule by identifying peptide bonds (atomMap 1 and 2) 
@@ -31,8 +32,8 @@ class AminoAcidBuilder:
             AminoAcidUtils.util_highlight_peptide_bonds(mol, peptidic_bonds)
             
         if obtain_amino_acids:
-            AminoAcidUtils.util_display_amino_acids(mol, peptidic_bonds)
-    
+            amino_acids = AminoAcidUtils.util_display_amino_acids(mol, peptidic_bonds, plot)
+            return amino_acids
     
     @staticmethod
     def builder_amino_acid_mapping_vector(mol, device):

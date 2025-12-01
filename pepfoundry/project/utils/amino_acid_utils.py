@@ -79,7 +79,7 @@ class AminoAcidUtils:
         display(img)
     
     @staticmethod
-    def util_display_amino_acids(mol, peptidic_bonds):
+    def util_display_amino_acids(mol, peptidic_bonds, plot):
         """
         Displays the amino acids in a molecule by highlighting them.
         
@@ -93,9 +93,10 @@ class AminoAcidUtils:
         # Fragment the molecule at the peptide bonds without adding dummy atoms
         amino_acids = Chem.FragmentOnBonds(mol, peptidic_bonds, addDummies=False)
         
-        # Display the resulting fragments
-        img = Draw.MolToImage(amino_acids, size=(600, 600))
-        display(img)
+        if plot:
+            # Display the resulting fragments
+            img = Draw.MolToImage(amino_acids, size=(600, 600))
+            display(img)
         
         return amino_acids
     

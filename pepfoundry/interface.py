@@ -2,6 +2,7 @@
 from pepfoundry.project.core.peptide_builder import PeptideBuilder
 from pepfoundry.project.core.amino_acid_builder import AminoAcidBuilder
 from pepfoundry.project.core.library import AminoAcidDictionary
+from rdkit import Chem
 
 class PepFoundry():
     """
@@ -209,7 +210,11 @@ class PepFoundry():
         """
         return self.peptide_builder.builder_atomic_adjacency_matrix(mol, device)
     
-    def get_plot_aminoacids(self, mol, highlight_bonds=False, obtain_amino_acids=False):
+    def get_plot_aminoacids(self,
+                                mol,
+                                highlight_bonds=False,
+                                obtain_amino_acids=False,
+                                plot=True):
         """
         Visualize or fragment the peptide molecule.\
         
@@ -218,7 +223,32 @@ class PepFoundry():
             highlight_bonds (bool): Highlight peptide bonds.
             obtain_amino_acids (bool): Display amino acid fragments.
         """
-        return self.amino_acid_builder.builder_amino_acid_plotting(mol, highlight_bonds, obtain_amino_acids)
+        return self.amino_acid_builder.builder_amino_acid_plotting(mol, highlight_bonds, obtain_amino_acids, plot)
+    
+    def get_amino_acids(self, 
+                            mol,
+                            obtain_amino_acids=True,
+                            highlight_bonds=False,
+                            plot = False):
+        """
+        Fragment a peptide molecule into individual amino acids.
+        This function takes an RDKit molecule representing a peptide and returns
+        a list of RDKit `Mol` objects, each corresponding to a single amino acid
+        fragment. Peptide bonds are not highlighted in this process.
+
+        Arg:
+        mol : Chem.Mol
+            An RDKit molecule representing the full peptide sequence.
+
+        Returns:
+        List[Chem.Mol]
+        A list of RDKit molecule objects, each representing an individual amino acid
+        fragment from the peptide.
+        """
+        amino_acids_mol = self.amino_acid_builder.builder_amino_acid_plotting(mol, highlight_bonds, obtain_amino_acids, plot)
+        amino_acids_mol_list = Chem.GetMolFrags(amino_acids_mol, asMols=True)
+        
+        return amino_acids_mol_list
     
     def get_amino_acid_atom_mapping(self, mol, device='cpu'):
         """
