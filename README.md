@@ -150,6 +150,6 @@ Examples of how PepFoudry can be implemented for ML application is provided in:
 - [ML example](example_ML/example_ML.ipynb)
 
 ## 4. Cite
-Garzon Otero D, Akbari O, Mandapati A, Bilodeau C. PepFoundry: A Pipeline for Building Machine-Learning Ready Representations of Non-Standard Peptides Containing Cycles, Non-natural Residues, Polymer Units, and More. ChemRxiv. 2025; doi:10.26434/chemrxiv-2025-6tr6g This content is a preprint and has not been peer-reviewed.
+Garzon Otero, D.; Akbari, O.; Mandapati, A.; Bilodeau, C. PepFoundry: A Pipeline for Building Machine-Learning Ready Representations of Nonstandard Peptides Containing Cycles, Non-natural Residues, Polymer Units, and More. J. Chem. Inf. Model. ASAP. https://doi.org/10.1021/acs.jcim.5c02629
 
 
