@@ -39,10 +39,7 @@ pip install ipykernel || { echo "[ERROR] ipykernel installation failed"; exit 1;
 echo "[INFO] Installing pandas..."
 pip install pandas || { echo "[ERROR] pandas installation failed"; exit 1; }
 
-echo "[INFO] Installing Open Babel (conda-forge)..."
-conda install -c conda-forge --yes openbabel || { echo "[ERROR] Open Babel installation failed"; exit 1; }
-
-echo "[INFO] Installing Pybel (python wrapper for Open Babel)..."
+echo "[INFO] Installing Pybel ..."
 pip install openbabel-wheel || { pip install pybel || echo "[WARNING] Pybel fallback installed"; }
 
 echo "[INFO] Installing pepfoundry package from GitHub..."

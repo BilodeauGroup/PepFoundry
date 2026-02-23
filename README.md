@@ -79,9 +79,6 @@ pip install ipykernel
 pip install pandas
 ```
 ```sh
-conda install -c conda-forge --yes openbabel 
-```
-```sh
 pip install openbabel-wheel
 ```
 #### 1.2.4.  Installing PepFoundry from GitHub
