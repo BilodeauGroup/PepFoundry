@@ -1,49 +1,36 @@
 #!/bin/bash
-set -e  # Exit immediately if a command exits with a non-zero status
+set -e
 set -o pipefail
 
 ENV_NAME="pepfoundry"
-PYTHON_VERSION="3.7.16"
 
-echo "[INFO] Creating conda environment '$ENV_NAME' with Python $PYTHON_VERSION..."
-conda create --yes --name $ENV_NAME python=$PYTHON_VERSION
+echo "[INFO] Creating conda environment '$ENV_NAME' with Python 3.11..."
+conda create -y -n $ENV_NAME python=3.11
 echo "[INFO] Environment created."
 
-echo "[INFO] Activating the environment..."
-# Initialize conda for the current shell
+echo "[INFO] Activating environment..."
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $ENV_NAME
-echo "[INFO] Environment activated."
 
-echo "[INFO] Installing RDKit..."
-pip install rdkit || { echo "[ERROR] RDKit installation failed"; exit 1; }
+echo "[INFO] Installing RDKit + numpy from conda-forge..."
+conda install -y -c conda-forge rdkit numpy=1.26
 
-# Check for CUDA availability
-if command -v nvidia-smi &> /dev/null; then
-    echo "[INFO] CUDA detected, installing GPU version of PyTorch..."
-    pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch GPU installation failed"; exit 1; }
-else
-    echo "[INFO] CUDA not detected, installing CPU version of PyTorch..."
-    pip install torch==1.13.1 torchvision==0.14.1 -f https://download.pytorch.org/whl/torch_stable.html || { echo "[ERROR] PyTorch CPU installation failed"; exit 1; }
-fi
+echo "[INFO] Installing PyTorch (compatible with Python 3.11)..."
+# Recommended modern CUDA build (adjust if needed)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
 
-echo "[INFO] Installing Openpyxl..."
-pip install openpyxl || { echo "[ERROR] Openpyxl installation failed"; exit 1; }
+echo "[INFO] Installing Python packages..."
+pip install openpyxl
+pip install scikit-learn
+pip install ipykernel
+pip install pandas
+pip install openbabel-wheel
 
-echo "[INFO] Installing scikit-learn..."
-pip install scikit-learn || { echo "[ERROR] scikit-learn installation failed"; exit 1; }
+echo "[INFO] Installing PepFoundry from GitHub..."
+pip install git+https://github.com/BilodeauGroup/PepFoundry.git || {
+    echo "[ERROR] PepFoundry installation failed"
+    exit 1
+}
 
-echo "[INFO] Installing ipykernel..."
-pip install ipykernel || { echo "[ERROR] ipykernel installation failed"; exit 1; }
-
-echo "[INFO] Installing pandas..."
-pip install pandas || { echo "[ERROR] pandas installation failed"; exit 1; }
-
-echo "[INFO] Installing Pybel ..."
-pip install openbabel-wheel || { pip install pybel || echo "[WARNING] Pybel fallback installed"; }
-
-echo "[INFO] Installing pepfoundry package from GitHub..."
-pip install git+https://github.com/BilodeauGroup/PepFoundry.git || { echo "[ERROR] smiles2peptides installation failed"; exit 1; }
-
-echo "[INFO] Setup complete. The '$ENV_NAME' environment is ready to use."
-echo "[INFO] To activate the environment, run: conda activate $ENV_NAME"
+echo "[INFO] Setup complete."
+echo "[INFO] Activate with: conda activate $ENV_NAME"

@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from rdkit import Chem  
+from rdkit.Chem import rdPartialCharges
 from rdkit.Chem import Draw  
 from IPython.display import display 
 import re
@@ -182,12 +183,16 @@ class PeptideUtils:
         }
         # Accumulate features from all amino acid molecules
         for aa_mol in amino_acids_mol:
+            Chem.SanitizeMol(aa_mol)
+            Chem.AssignStereochemistry(aa_mol, cleanIt=True, force=True)
+            rdPartialCharges.ComputeGasteigerCharges(aa_mol)
+            
             atom_features["atomic_number"].extend([atom.GetAtomicNum() for atom in aa_mol.GetAtoms()])
             atom_features["aromaticity"].extend([int(atom.GetIsAromatic()) for atom in aa_mol.GetAtoms()])
             atom_features["num_bonds"].extend([atom.GetDegree() for atom in aa_mol.GetAtoms()])
             atom_features["bonded_hydrogens"].extend([atom.GetTotalNumHs() for atom in aa_mol.GetAtoms()])
             atom_features["hybridization"].extend([str(atom.GetHybridization()) for atom in aa_mol.GetAtoms()])
-            atom_features["implicit_valence"].extend([atom.GetImplicitValence() for atom in aa_mol.GetAtoms()])
+            atom_features["implicit_valence"].extend([atom.GetValence(Chem.ValenceType.IMPLICIT) for atom in aa_mol.GetAtoms()])
             # Bond features
             for bond in aa_mol.GetBonds():
                 bond_features["bond_type"].append(bond.GetBondTypeAsDouble())
@@ -291,12 +296,16 @@ class PeptideUtils:
         }
         # Accumulate features from all amino acid molecules
         for aa_mol in amino_acids_mol:
+            Chem.SanitizeMol(aa_mol)
+            Chem.AssignStereochemistry(aa_mol, cleanIt=True, force=True)
+            rdPartialCharges.ComputeGasteigerCharges(aa_mol)
+            
             atom_features["atomic_number"].extend([atom.GetAtomicNum() for atom in aa_mol.GetAtoms()])
             atom_features["aromaticity"].extend([int(atom.GetIsAromatic()) for atom in aa_mol.GetAtoms()])
             atom_features["num_bonds"].extend([atom.GetDegree() for atom in aa_mol.GetAtoms()])
             atom_features["bonded_hydrogens"].extend([atom.GetTotalNumHs() for atom in aa_mol.GetAtoms()])
             atom_features["hybridization"].extend([str(atom.GetHybridization()) for atom in aa_mol.GetAtoms()])
-            atom_features["implicit_valence"].extend([atom.GetImplicitValence() for atom in aa_mol.GetAtoms()])
+            atom_features["implicit_valence"].extend([atom.GetValence(Chem.ValenceType.IMPLICIT) for atom in aa_mol.GetAtoms()])
             # Chirality feature: 
             """
             It reflects how chirality is encoded in the SMILES string.
@@ -405,12 +414,16 @@ class PeptideUtils:
             edge_key_features (list of str): Encoded string keys for bond-level features.
         """
         # Atom-level (node) features
+        Chem.SanitizeMol(mol)
+        Chem.AssignStereochemistry(mol, cleanIt=True, force=True)
+        rdPartialCharges.ComputeGasteigerCharges(mol)
+        
         atomic_number = [atom.GetAtomicNum() for atom in mol.GetAtoms()]
         aromaticity = [int(atom.GetIsAromatic()) for atom in mol.GetAtoms()]
         num_bonds = [atom.GetDegree() for atom in mol.GetAtoms()]
         bonded_hydrogens = [atom.GetTotalNumHs() for atom in mol.GetAtoms()]
         hybridization = [str(atom.GetHybridization()) for atom in mol.GetAtoms()]
-        implicit_valence = [atom.GetImplicitValence() for atom in mol.GetAtoms()]
+        implicit_valence = [atom.GetValence(Chem.ValenceType.IMPLICIT) for atom in mol.GetAtoms()]
         
         node_keys_features = [
                             f"{atomic}_{aromatic}_{bonds}_{hydrogen}_{hybrid}_{impli_vale}"
@@ -452,13 +465,17 @@ class PeptideUtils:
             edge_key_features (list of str): Encoded string keys for bond-level features.
         """
         # Atom-level (node) features
+        Chem.SanitizeMol(mol)
+        Chem.AssignStereochemistry(mol, cleanIt=True, force=True)
+        rdPartialCharges.ComputeGasteigerCharges(mol)
+
         atomic_number = [atom.GetAtomicNum() for atom in mol.GetAtoms()]
         aromaticity = [int(atom.GetIsAromatic()) for atom in mol.GetAtoms()]
         num_bonds = [atom.GetDegree() for atom in mol.GetAtoms()]
-        bonded_hydrogens = [atom.GetTotalNumHs() for atom in mol.GetAtoms()]
+        bonded_hydrogens = [atom.GetTotalNumHs(includeNeighbors=True) for atom in mol.GetAtoms()]
         hybridization = [str(atom.GetHybridization()) for atom in mol.GetAtoms()]
-        implicit_valence = [atom.GetImplicitValence() for atom in mol.GetAtoms()]
-        chirality = [str(atom.GetChiralTag()) for atom in mol.GetAtoms()] 
+        implicit_valence = [atom.GetValence(Chem.ValenceType.IMPLICIT) for atom in mol.GetAtoms()]
+        chirality = [str(atom.GetChiralTag()) for atom in mol.GetAtoms()]
         
         # Node key features with chirality
         node_keys_features = [
@@ -611,6 +628,11 @@ class PeptideUtils:
         """
         # --- Canonicalize the input SMILES using RDKit ---
         mol_rd = Chem.MolFromSmiles(peptide_smiles)
+        Chem.SanitizeMol(mol_rd)
+        Chem.AssignStereochemistry(mol_rd, force=True, cleanIt=True)
+        Chem.Kekulize(mol_rd, clearAromaticFlags=True)
+        mol_rd.UpdatePropertyCache(strict=False)
+        
         if mol_rd is None:
             raise ValueError("RDKit failed to parse the SMILES: " + peptide_smiles)
         canonical_smiles = Chem.MolToSmiles(mol_rd, canonical=True)
