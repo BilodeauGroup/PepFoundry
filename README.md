@@ -23,19 +23,24 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 ![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/cycle.gif)
 
 ## New Updates
--  Jul.08/2026, **Version 2.0.0**: PepFoundry has been modernized to simplify installation and improve compatibility across platforms.  
-**Major updates**
-    - Migrated the recommended environment to **Python 3.11**.
-    - Updated **RDKit** to the latest **2026** release (installed via **conda-forge**).
-    - Updated the recommended **PyTorch** version to **2.5.1**.
-    - Added automatic detection of the available compute backend during installation
-    - Updated core scientific dependencies:
-      - NumPy 1.26+
-      - pandas 3.x
-      - scikit-learn 1.9+  
-**Breaking changes**
-    - Python versions earlier than **3.11** are no longer supported by the recommended installation.
-    - Legacy Python 3.7 / PyTorch 1.x installation workflows have been deprecated.  
+
+- Jul.08/2026, **Version 2.0.0**: PepFoundry has been modernized to simplify installation and improve compatibility across platforms.
+
+  **Major updates**
+
+  - Migrated the recommended environment to **Python 3.11**.
+  - Updated **RDKit** to the latest **2026** release (installed via **conda-forge**).
+  - Updated the recommended **PyTorch** version to **2.5.1**.
+  - Added automatic detection of the available compute backend during installation.
+  - Updated core scientific dependencies:
+    - NumPy 1.26+
+    - pandas 3.x
+    - scikit-learn 1.9+
+
+  **Breaking changes**
+
+  - Python versions earlier than **3.11** are no longer supported by the recommended installation.
+  - Legacy Python 3.7 / PyTorch 1.x installation workflows have been deprecated.
 
 - Dec.01/2025, **Version 1.1.1**: We have added a new method `get_amino_acids`, this return list of RDKit molecule objects, each representing a single amino acid. See usage examples in [examples_PepFoundry](examples_PepFoundry.ipynb)  
 
