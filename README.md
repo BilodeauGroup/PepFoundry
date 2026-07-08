@@ -6,8 +6,8 @@ ______________________________________________________________________
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=BilodeauGroup.PepFoundry)
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
 ![RDKit](https://img.shields.io/badge/rdkit-2026.03-purple.svg)
-![PyTorch](https://img.shields.io/badge/torch-2.0.x-red.svg)
-![Torchvision](https://img.shields.io/badge/torchvision-0.15.x-lightgrey.svg)
+![PyTorch](https://img.shields.io/badge/torch-2.5.1-red.svg)
+![Torchvision](https://img.shields.io/badge/torchvision-0.20.1-lightgrey.svg)
 ![openpyxl](https://img.shields.io/badge/openpyxl-3.1.x-yellow.svg)
 ![scikit--learn](https://img.shields.io/badge/scikit--learn-1.9.x-green.svg)
 ![pandas](https://img.shields.io/badge/pandas-3.x-blueviolet.svg)
@@ -23,12 +23,19 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 ![Demo](https://github.com/BilodeauGroup/PepFoundry/blob/master/fig/cycle.gif)
 
 ## New Updates
-- Jul.02/2026, **Version 2.0.0**: PepFoundry with a modernization. This update migrates the codebase to Python 3.11. RDKit has been upgraded to 2026 (conda-forge), and PyTorch support has been updated to 2.x versions with CUDA 11.7 compatibility. This release also updates core dependencies including pandas (3.x), scikit-learn (1.9+), and numpy (1.26+).
-**Breaking changes**:
-    - Python versions < 3.11 are no longer supported in the recommended installation
-    - RDKit must now be installed via conda-forge (not pip)
-    - Legacy PyTorch 1.13.1 setup has been deprecated
-    - Old setup scripts for Python 3.7 have been removed from recommended workflows
+-  Jul.08/2026, **Version 2.0.0**: PepFoundry has been modernized to simplify installation and improve compatibility across platforms.
+  **Major updates**
+  - Migrated the recommended environment to **Python 3.11**.
+  - Updated **RDKit** to the latest **2026** release (installed via **conda-forge**).
+  - Updated the recommended **PyTorch** version to **2.5.1**.
+  - Added automatic detection of the available compute backend during installation
+  - Updated core scientific dependencies:
+    - NumPy 1.26+
+    - pandas 3.x
+    - scikit-learn 1.9+
+  **Breaking changes**
+  - Python versions earlier than **3.11** are no longer supported by the recommended installation.
+  - Legacy Python 3.7 / PyTorch 1.x installation workflows have been deprecated.
 - Dec.01/2025, **Version 1.1.1**: We have added a new method `get_amino_acids`, this return list of RDKit molecule objects, each representing a single amino acid. See usage examples in [examples_PepFoundry](examples_PepFoundry.ipynb)
 - Nov.26/2025, **Version 1.1.0**: We have added a new method `get_smiles_chuckles_format` that automatically converts peptide SMILES into CHUCKLES format, including mapping numbers for the terminal residues. This update introduces a new dependency, `openbabel`. Usage and examples of this method can be found in [examples_CHUCKLES.ipynb](examples_CHUCKLES.ipynb).
 
@@ -74,6 +81,7 @@ pip install torch --index-url https://download.pytorch.org/whl/{CUDA}
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 ```
+- Dependencies:
 ```sh
 pip install openpyxl
 ```
