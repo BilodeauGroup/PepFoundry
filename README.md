@@ -24,7 +24,7 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 ## New Updates
 -  Jul.08/2026, **Version 2.0.0**: PepFoundry has been modernized to simplify installation and improve compatibility across platforms.  
-    **Major updates**  
+**Major updates**
     - Migrated the recommended environment to **Python 3.11**.
     - Updated **RDKit** to the latest **2026** release (installed via **conda-forge**).
     - Updated the recommended **PyTorch** version to **2.5.1**.
@@ -33,7 +33,7 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
       - NumPy 1.26+
       - pandas 3.x
       - scikit-learn 1.9+  
-    **Breaking changes**
+**Breaking changes**
     - Python versions earlier than **3.11** are no longer supported by the recommended installation.
     - Legacy Python 3.7 / PyTorch 1.x installation workflows have been deprecated.  
 
