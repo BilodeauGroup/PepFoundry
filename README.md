@@ -64,9 +64,13 @@ conda activate pepfoundry
 ```sh
 conda install -c conda-forge rdkit numpy=1.26
 ```
-- Install PyTorch (GPU or CPU)
+- Install PyTorch (GPU)
 ```sh
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+pip install torch --index-url https://download.pytorch.org/whl/cu117
+```
+- Or Install PyTorch (CPU)
+```sh
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 ```
 ```sh
 pip install openpyxl

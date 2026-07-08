@@ -28,7 +28,7 @@ class PeptideBuilder:
             
             exception_value = amino_acid_library[character][2]  # asume int o None
             
-            if exception_value is not '':
+            if exception_value != '':
                 exception_value = int(float(exception_value))
                 PeptideUtils.util_validate_exception_position(character, exception_value, i, last_index)
             
