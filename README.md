@@ -64,10 +64,12 @@ conda activate pepfoundry
 ```sh
 conda install -c conda-forge rdkit numpy=1.26
 ```
-- Install PyTorch (GPU)
+- Install PyTorch (GPU-**{CUDA}**)
 ```sh
-pip install torch --index-url https://download.pytorch.org/whl/cu117
+pip install torch --index-url https://download.pytorch.org/whl/{CUDA}
 ```
+*e.g: pip install torch --index-url https://download.pytorch.org/whl/cu121
+
 - Or Install PyTorch (CPU)
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
