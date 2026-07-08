@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-ENV_NAME="pepmnet_py311"
+ENV_NAME="pepfoundry"
 
 echo "[INFO] Creating conda environment '$ENV_NAME' with Python 3.11..."
 conda create -y -n $ENV_NAME python=3.11
